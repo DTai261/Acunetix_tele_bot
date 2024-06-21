@@ -37,27 +37,27 @@ python Telegram_bot.py
 
 ## Usage
 
-The following command are use for control the acunetix scan using telegram. More details in the <a href='#example'>example</a>. 
-`/start`: just a start !
-`/note`: write a note
-`/read_note`: retrive note, can add arg as number of line
-`/help`: help !
-`/add_target`: add wildcard target to find it subdomains.
-`/start_scan`: start scan on wildcard / single target
-`/set_targets`: Set number of targets simultaneously scan acunetix
-`/list_target`: list all the target add by `/add_target` that not been scan nuclei
-`/print_subdomains`: print subdomains of target
-`/stop_vuln`: add vuln to list out of scope
-`/auto_abort_scan_true`: set auto abort scan after x hours for all targets (default)
-`/auto_abort_scan_false`: unset auto abort scan after x hours for all targets
-`/ram`: show system memory usage
-`/get_processing_targets`: list all the target have status proccessing acunetix
-`/stop_scan_acunetix`: stop an acunetix scan by scan_id
-`/get_list_vulns`: get all the vuln by filter eg: `/get_list_vulns 2,3,4 https://example.com, https://google.com`
-`/vuln_detail`: get vuln detail by vuln id
-`/vuln_type`: get all scanned vulns by severity (1-4)
-`/search_vuln`: search for vuln has been scaned
-`/manual_activate_auto_scan`: Manual activate auto scan after it dead. Not sure if this work :)
+The following command are use for control the acunetix scan using telegram. More details in the <a href='#example'>example</a>. <br>
+`/start`: just a start !<br>
+`/note`: write a note<br>
+`/read_note`: retrive note, can add arg as number of line<br>
+`/help`: help !<br>
+`/add_target`: add wildcard target to find it subdomains.<br>
+`/start_scan`: start scan on wildcard / single target<br>
+`/set_targets`: Set number of targets simultaneously scan acunetix<br>
+`/list_target`: list all the target add by `/add_target` that not been scan nuclei<br>
+`/print_subdomains`: print subdomains of target<br>
+`/stop_vuln`: add vuln to list out of scope<br>
+`/auto_abort_scan_true`: set auto abort scan after x hours for all targets (default)<br>
+`/auto_abort_scan_false`: unset auto abort scan after x hours for all targets<br>
+`/ram`: show system memory usage<br>
+`/get_processing_targets`: list all the target have status proccessing acunetix<br>
+`/stop_scan_acunetix`: stop an acunetix scan by scan_id<br>
+`/get_list_vulns`: get all the vuln by filter eg: `/get_list_vulns 2,3,4 https://example.com, https://google.com`<br>
+`/vuln_detail`: get vuln detail by vuln id<br>
+`/vuln_type`: get all scanned vulns by severity (1-4)<br>
+`/search_vuln`: search for vuln has been scaned<br>
+`/manual_activate_auto_scan`: Manual activate auto scan after it dead. Not sure if this work :)<br>
 
 ## Example
 
