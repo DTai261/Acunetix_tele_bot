@@ -1,0 +1,10 @@
+{
+    "heavy_targets": {
+        "451f3b91-4917-4dff-84d3-dbc3f4c9bc99": {
+            "address": "https://example.com",
+            "target_id": "58647a18-536b-45df-8499-1a898c3904fb",
+            "is_remind": false,
+            "is_auto_stop": true
+        }
+    }
+}

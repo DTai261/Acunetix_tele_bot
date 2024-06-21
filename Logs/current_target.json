@@ -1,0 +1,7 @@
+{
+    "current_target": {
+        "example.com": {
+            "is_scan_nuclei": false
+        }
+    }
+}
