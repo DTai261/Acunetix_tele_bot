@@ -665,25 +665,25 @@ if __name__ == "__main__":
     main()
 
 help = """
-start - just a start !
-note - write a note
-read_note - retrive note, can add arg as number of line
-help - help !
-add_target - add wildcard target to find it subdomains.
-start_scan - start scan on wildcard / single target
-set_targets - Set number of targets simultaneously scan acunetix
-list_target - list all the target add by /add_target that not been scan nuclei
-print_subdomains - print subdomains of target
-stop_vuln - add vuln to list out of scope
-auto_abort_scan_true - set auto abort after 9 hours for target
-auto_abort_scan_false - unset auto abort after 9 hours for target
-ram - show system memory usage
-get_processing_targets - list all the target have status proccessing acunetix
-stop_scan_acunetix - stop an acunetix scan by scan_id
-get_list_vulns - get all the vuln by filter eg: '/get_list_vulns 2,3,4 https://example.com,https://google.com'
-vuln_detail - get vuln detail by vuln id
-vuln_type - get all scanned vulns by severity (1-4)
-search_vuln - search for vuln has been scaned
-manual_activate_auto_scan - Manual activate auto scan after it dead. Not sure if this work :))
+/start: just a start !
+/note: write a note
+/read_note: retrive note, can add arg as number of line
+/help: help !
+/add_target: add wildcard target to find it subdomains.
+/start_scan: start scan on wildcard / single target
+/set_targets: Set number of targets simultaneously scan acunetix
+/list_target: list all the target add by /add_target that not been scan nuclei
+/print_subdomains: print subdomains of target
+/stop_vuln: add vuln to list out of scope
+/auto_abort_scan_true: set auto abort after 9 hours for target
+/auto_abort_scan_false: unset auto abort after 9 hours for target
+/ram: show system memory usage
+/get_processing_targets: list all the target have status proccessing acunetix
+/stop_scan_acunetix: stop an acunetix scan by scan_id
+/get_list_vulns: get all the vuln by filter eg: /get_list_vulns 2,3,4 https://example.com, https://google.com
+/vuln_detail: get vuln detail by vuln id
+/vuln_type: get all scanned vulns by severity (1-4)
+/search_vuln: search for vuln has been scaned
+/manual_activate_auto_scan: Manual activate auto scan after it dead. Not sure if this work :)
 """
 
