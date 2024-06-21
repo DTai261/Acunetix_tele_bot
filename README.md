@@ -15,11 +15,18 @@
 
 
 ## About
+The `Acunetix telegram bot` is a powerful and convenient Telegram bot designed to manage and automate your Acunetix vulnerability scans. This bot allows you to control your Acunetix scans directly from your Telegram account through simple commands.
 
+
+## Features
+- Automated Target Addition: Easily add new targets to your Acunetix scan queue via Telegram commands.
+- Real-Time Vulnerability Alerts: Receive instant notifications on Telegram whenever new vulnerabilities are discovered during scans.
+- Detailed Vulnerability Information: Get comprehensive details about each detected vulnerability directly in your Telegram chat, enabling quick assessment and action.
+- Convenient Scan Management: Start, stop, and manage your scans with simple and intuitive Telegram commands.
 
 ## Installation
 **Prerequire**:
-You must install these tool
+You must be install the following tools first: [subfinder](https://github.com/projectdiscovery/subfinder), [httpx](https://github.com/projectdiscovery/httpx)<sup><a href="#1">(1)</a></sup>, [nuclei](https://github.com/projectdiscovery/nuclei)<sup><a href="#2">(2)</a>, [notify](https://github.com/projectdiscovery/notify)
 
 To install `Acunetix telegram bot`, follow these steps:
 ```sh
@@ -30,10 +37,6 @@ pip install -r requirements.txt
 # Edit the file config.py then run the bot:
 python Telegram_bot.py
 ```
-
-## Features
-- [x] fill this
-- [ ] and this
 
 ## Usage
 
@@ -62,7 +65,7 @@ The following command are use for control the acunetix scan using telegram. More
 ## Example
 
 ### `/add_target`
-When user provide domain target, the bot will scan subdomain using subfinder and httpx<sup>(1)</sup> then add them to the Acunetix target list.
+When user provide domain target, the bot will scan subdomain using subfinder and httpx then add them to the Acunetix target list.
 <table>
   <tr>
     <td>
@@ -248,3 +251,10 @@ Get the vuln detail by id: http request, highlighted, references, ...
         </td>
       </tr>
   </table>
+
+### Note
+###### 1:
+- because of the conflict to the httpx of python I have to change the name of the binary file from httpx to httpxx. You can modify at this [line](https://github.com/DTai261/Acunetix_tele_bot/blob/main/AcuScan.py#L158).
+
+###### 2: 
+- Currently scan nuclei not available yet because I did some stupid stuff with it :v I may update it in the future.
