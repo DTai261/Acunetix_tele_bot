@@ -26,7 +26,7 @@ The `Acunetix telegram bot` is a powerful and convenient Telegram bot designed t
 
 ## Installation
 **Prerequire**:
-You must be install the following tools first: [subfinder](https://github.com/projectdiscovery/subfinder), [httpx](https://github.com/projectdiscovery/httpx)<sup><a href="#1">(1)</a></sup>, [nuclei](https://github.com/projectdiscovery/nuclei)<sup><a href="#2">(2)</a>, [notify](https://github.com/projectdiscovery/notify)
+You must be install the following tools first: [subfinder](https://github.com/projectdiscovery/subfinder), [httpx](https://github.com/projectdiscovery/httpx)<sup><a href="#1">(1)</a></sup>, [nuclei](https://github.com/projectdiscovery/nuclei)<sup><a href="#2">(2)</a></sup>, [notify](https://github.com/projectdiscovery/notify)
 
 To install `Acunetix telegram bot`, follow these steps:
 ```sh
