@@ -19,10 +19,14 @@ The `Acunetix telegram bot` is a powerful and convenient Telegram bot designed t
 
 
 ## Features
-- Automated Target Addition: Easily add new targets to your Acunetix scan queue via Telegram commands.
-- Real-Time Vulnerability Alerts: Receive instant notifications on Telegram whenever new vulnerabilities are discovered during scans.
-- Detailed Vulnerability Information: Get comprehensive details about each detected vulnerability directly in your Telegram chat, enabling quick assessment and action.
-- Convenient Scan Management: Start, stop, and manage your scans with simple and intuitive Telegram commands.
+- Features
+  - Automated Target Addition: Easily add new targets to your Acunetix scan queue via Telegram commands.
+  - Real-Time Vulnerability Alerts: Receive instant notifications on Telegram whenever new vulnerabilities are discovered during scans.
+  - Detailed Vulnerability Information: Get comprehensive details about each detected vulnerability directly in your Telegram chat, enabling quick assessment and action.
+  - Convenient Scan Management: Start, stop, and manage your scans with simple and intuitive Telegram commands.
+  - User Restriction: Only users specified in the configuration file can issue commands to the bot, ensuring controlled access. Currently, the bot sends all updates and vulnerability details to a single authorized user, even if the bot is added to a group.
+- Future Enhancements
+  - Group Command: Plans to add support for group commands, allowing the bot to accept commands from multiple authorized users within a group and send updates to the entire group.
 
 ## Installation
 **Prerequire**:
