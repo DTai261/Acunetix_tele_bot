@@ -254,7 +254,7 @@ Get the vuln detail by id: http request, highlighted, references, ...
 
 ### Note
 ###### 1:
-- because of the conflict to the httpx of python I have to change the name of the binary file from httpx to httpxx. You can modify at this [line](https://github.com/DTai261/Acunetix_tele_bot/blob/main/AcuScan.py#L158).
+- It may have a conflict between httpx  module of python and the httpx tool so you can modify this [line](https://github.com/DTai261/Acunetix_tele_bot/blob/main/AcuScan.py#L158) to the absolute path of the binary file.
 
 ###### 2: 
 - Currently scan nuclei not available yet because I did some stupid stuff with it :v I may update it in the future.
