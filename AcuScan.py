@@ -155,7 +155,7 @@ def run_subfinder_httpx(target: str) -> None:
         if not check_file(output_file_path):
             pass
             # Run the command and capture its output
-            command = f"subfinder -d {target} --silent | httpxx --silent"
+            command = f"subfinder -d {target} --silent | httpx --silent"
             try:
                 # output = subprocess.check_output(command, shell=True, text=True)
                 process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
