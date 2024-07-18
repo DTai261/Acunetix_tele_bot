@@ -296,7 +296,7 @@ def get_new_vuln_acunetix() -> None:
     global profile_id
     added_profile_id = Acunetix.CheckScanProfile()
     if added_profile_id != None:
-        send_message_markdown(f'Created scan profile. Remember to add it to the config file: `{profile_id}`')
+        send_message_markdown(f'Created scan profile.')
         profile_id = added_profile_id
     is_scanning = False
     heavy_target_log = None
@@ -307,7 +307,10 @@ def get_new_vuln_acunetix() -> None:
             is_scan_dead = False
             file = open("Logs/last_seen_acunetix.log")
             last_seen = file.read().strip()
-            List_Latest_vulns = Acunetix.GetLatestVuln(last_seen)
+            if config.NOTIFICATION:
+                List_Latest_vulns = Acunetix.GetLatestVuln(last_seen)
+            else:
+                List_Latest_vulns = None
             in_process_target = Acunetix.GetInProcessTargets('processing')
             queued_target = Acunetix.GetInProcessTargets('queued')
 
@@ -366,45 +369,46 @@ def get_new_vuln_acunetix() -> None:
                 # prevent rate limit from Telegram
                 time.sleep(1)
             # get the lastest vuln and send it to user
-            for vuln in List_Latest_vulns:
+            if List_Latest_vulns != None:
+                for vuln in List_Latest_vulns:
 
-                vt_id = vuln.get('vt_id')
-                if vt_id not in config.OUT_SCOPE_VULN_ACUNETIX:
-                    msg = ''
-                    affects_url = vuln.get('affects_url')
-                    confidence = vuln.get('confidence')
-                    vt_name = vuln.get('vt_name')
-                    vuln_id = vuln.get('vuln_id')
-                    severity = vuln.get('severity')
-                    txt_severity = ''
-                    if severity == 2:
-                        txt_severity = '[Medium]'
-                    if severity == 3:
-                        txt_severity = '[High]'
-                    if severity == 4:
-                        txt_severity = '[Critical]'
-                    
-                    vuln_details = Acunetix.get_vuln_details(vuln_id)
-                    msg = (f"{txt_severity} - {vt_name} : ({confidence} confidence)\n" +
-                        f"target: {affects_url}\n" +
-                        "----------------------\n" +
-                        "details:\n" +
-                        f"{replace_markdown_message(html.unescape(vuln_details.get('details')[:333]))}\n" + # prevent eror when the message too long and the bot can't handler it
-                        "----------------------\n" +
-                        "request:\n" +
-                        f"{vuln_details.get('request')}\n" +
-                        "----------------------\n" +
-                        "highlighted in response:\n" +
-                        f"{vuln_details.get('highlighted_text')[:1000]}" +
-                        "----------------------\n" 
-                    )
-                    msg = replace_markdown_message(msg)
-                    msg += f'To Stop receive noti for this vuln you can use command `/stop_vuln {vt_id}`'
+                    vt_id = vuln.get('vt_id')
+                    if vt_id not in config.OUT_SCOPE_VULN_ACUNETIX:
+                        msg = ''
+                        affects_url = vuln.get('affects_url')
+                        confidence = vuln.get('confidence')
+                        vt_name = vuln.get('vt_name')
+                        vuln_id = vuln.get('vuln_id')
+                        severity = vuln.get('severity')
+                        txt_severity = ''
+                        if severity == 2:
+                            txt_severity = '[Medium]'
+                        if severity == 3:
+                            txt_severity = '[High]'
+                        if severity == 4:
+                            txt_severity = '[Critical]'
+                        
+                        vuln_details = Acunetix.get_vuln_details(vuln_id)
+                        msg = (f"{txt_severity} - {vt_name} : ({confidence} confidence)\n" +
+                            f"target: {affects_url}\n" +
+                            "----------------------\n" +
+                            "details:\n" +
+                            f"{replace_markdown_message(html.unescape(vuln_details.get('details')[:333]))}\n" + # prevent eror when the message too long and the bot can't handler it
+                            "----------------------\n" +
+                            "request:\n" +
+                            f"{vuln_details.get('request')}\n" +
+                            "----------------------\n" +
+                            "highlighted in response:\n" +
+                            f"{vuln_details.get('highlighted_text')[:1000]}" +
+                            "----------------------\n" 
+                        )
+                        msg = replace_markdown_message(msg)
+                        msg += f'To Stop receive noti for this vuln you can use command `/stop_vuln {vt_id}`'
 
-                    # except telegram.error.BadRequest:
-                    send_message_markdown(msg)
-                # prevent rate limit from Telegram
-                time.sleep(1) 
+                        # except telegram.error.BadRequest:
+                        send_message_markdown(msg)
+                    # prevent rate limit from Telegram
+                    time.sleep(1) 
             
             count = in_process_target.get('pagination').get('count') + queued_target.get('pagination').get('count')
             target_list = Acunetix.GetListTarget()

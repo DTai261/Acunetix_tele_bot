@@ -225,6 +225,22 @@ def GetInProcessTargets(status: str) -> dict:
     json_response = json.loads(response.text)
     return json_response
     
+def update_scan_profile_id(start_with: str, new_id:str) -> None:
+    config.SCAN_PROFILE_ID = new_id
+    # Read the contents of the file
+    file_path = 'config.py'
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    
+    
+    for i, line in enumerate(lines):
+        if line.startswith(f'{start_with}'):
+            lines[i] = f"{start_with} = '{new_id}'\n"
+            break
+    
+    # Write the updated contents back to the file
+    with open(file_path, 'w') as file:
+        file.writelines(lines)
 
 def CheckScanProfile() -> str:
     profile = False
@@ -239,6 +255,7 @@ def CheckScanProfile() -> str:
     profile_id = None
     if not profile:
         profile_id = AddScanProfile()
+        update_scan_profile_id('SCAN_PROFILE_ID', profile_id)
     print('AcuScan Auto Profile is loaded')
     return profile_id
 

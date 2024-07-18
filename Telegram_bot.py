@@ -8,12 +8,17 @@ import logging
 import concurrent.futures
 import psutil
 import json
+import jwt
 import requests
+from concurrent.futures import ThreadPoolExecutor
 from telegram import ParseMode, Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, CallbackContext, CallbackQueryHandler, ConversationHandler, MessageHandler, Filters
 
 api_key = config.TELEGRAM_API_KEY
 chat_id = config.ALLOWED_USER_ID
+TOKEN_EXPIRATION = config.TOKEN_EXPIRATION
+SECRET_KEY = config.SECRET_KEY
+API_PORT = config.API_PORT
 targets_to_scan = []
 scan_target = ''
 note_file_path = 'Logs/Notes.txt'
@@ -31,6 +36,22 @@ disp = updater.dispatcher
 
 # Create a ThreadPoolExecutor
 executor = concurrent.futures.ThreadPoolExecutor()
+
+user_tokens = {}
+
+def generate_token(user_id):
+    payload = {
+        'user_id': user_id,
+    }
+    if TOKEN_EXPIRATION is not None:
+        payload['exp'] = time.time() + TOKEN_EXPIRATION
+    return jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+
+def get_api_token(update: Update, context: CallbackContext) -> None:
+    user_id = update.message.from_user.id
+    token = generate_token(user_id)
+    user_tokens[user_id] = token
+    update.message.reply_text(f'Your API token: {token}')
 
 # Enable logging
 logging.basicConfig(
@@ -60,8 +81,6 @@ def add_target_command(update: Update, context):
     # update.message.reply_text(f'{msg}')
     # msg = AcuScan.run_subfinder_httpx(target)
     threading.Thread(target=AcuScan.run_subfinder_httpx, args=(target,)).start()
-
-
 
 
 def list_target_command(update: Update, context):
@@ -538,7 +557,11 @@ def help_command(update: Update, context):
         "`/stop_scan_acunetix`" + " - stop an acunetix scan by scan\_id\n" +
         "`/get_list_vulns`" + " - get all the vuln by filter eg: '/get\_list\_vulns 2,3,4 https://example.com,https://google.com'\n" +
         "`/vuln_detail`" + " - get vuln detail by vuln id\n" +
-        "`/vuln_type`" + " - get all scanned vulns by severity (1-4)" 
+        "`/vuln_type`" + " - get all scanned vulns by severity (1-4)\n" +
+        "`/search_vuln`" + " - search for vuln has been scaned\n" +
+        "`/manual_activate_auto_scan`" + " - Manual activate auto scan after it dead. Not sure if this work :)\n" +
+        "`/notification`" + " - Enable or disable new vulnerabilities notifications from the bot\n" +
+        "`/get_api_token`" + " - generate a new API token that can be used for authenticating requests to the associated API server" 
     )
     update.message.reply_text(help_msg, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
 
@@ -620,7 +643,32 @@ def search_vuln_command(update: Update, context):
         update.message.reply_text(msg, parse_mode=ParseMode.MARKDOWN, disable_web_page_preview=True)
         time.sleep(1)
 
-def main():
+def notification_command(update: Update, context):
+    user_id = update.message.from_user.id
+    if(chat_id != user_id):
+        update.message.reply_text('Sorry, you are not authorized to run this command!')
+        return 0
+    status = context.args[0] if context.args else None
+    if not status:
+        update.message.reply_text("Please provide `True` or `False` to set the status of notification.")
+        return
+    status = status.strip().lower() 
+    if status == 'true':
+        status = True
+    elif status == 'false':
+        status = False
+    else:
+        update.message.reply_text(f"Invalid input argument '{status}'. Expected 'True' or 'False'. Current notification status: {config.NOTIFICATION}")
+
+    if isinstance(status, bool):
+        config.NOTIFICATION = status
+        update.message.reply_text(f'Set notification to {status}!')
+
+def run_flask_api():
+    from api import app  # Import the Flask app object from api.py
+    app.run(host='0.0.0.0', port=API_PORT)
+
+def run_telegram_bot():
 
     disp.add_handler(telegram.ext.CommandHandler("start", start_command))
     disp.add_handler(telegram.ext.CommandHandler("help", help_command))
@@ -642,6 +690,8 @@ def main():
     disp.add_handler(telegram.ext.CommandHandler("read_note", read_note_command))
     disp.add_handler(telegram.ext.CommandHandler("manual_activate_auto_scan", manual_activate_auto_scan_command))
     disp.add_handler(telegram.ext.CommandHandler("search_vuln", search_vuln_command))
+    disp.add_handler(telegram.ext.CommandHandler("get_api_token", get_api_token))
+    disp.add_handler(telegram.ext.CommandHandler("notification", notification_command))
     
     disp.add_handler(CallbackQueryHandler(button_click_stop_scan))
     note_handler = ConversationHandler(
@@ -660,6 +710,14 @@ def main():
 
     # threading.Thread(target=AcuScan.get_new_vuln_acunetix).start()
 
+def main() -> None:
+    if config.API_SERVER:
+        # Create a ThreadPoolExecutor to run both the Telegram bot and the Flask API
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            executor.submit(run_telegram_bot)  # Start the Telegram bot
+            executor.submit(run_flask_api)     # Start the Flask API
+    else:
+        run_telegram_bot()  # Only run the Telegram bot
 
 if __name__ == "__main__":
     main()
@@ -685,5 +743,7 @@ help = """
 /vuln_type: get all scanned vulns by severity (1-4)
 /search_vuln: search for vuln has been scaned
 /manual_activate_auto_scan: Manual activate auto scan after it dead. Not sure if this work :)
+/notification: Enable or disable new vulnerabilities notifications from the bot
+/get_api_token: generate a new API token that can be used for authenticating requests to the associated API server
 """
 
