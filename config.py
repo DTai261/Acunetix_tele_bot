@@ -2,6 +2,7 @@ ACUNETIX_API_KEY="xxxxxxxxxxxxxxxxxxx"
 HOST= "https://localhost:13443"
 #Number of target scan at the same time
 NUMBER_OF_TARGETS_SIMULTANEOUSLY = 3
+API_SERVER = True
 
 #scan profile here: 
 SCAN_PROFILE = {
@@ -49,6 +50,7 @@ OUT_SCOPE_VULN_ACUNETIX = [
 # Time to scan acunetix (hours) after this time the tool will auto stop the target unless user config not auto abort on that target
 SCAN_TIME = 24
 
+NOTIFICATION = False
 
 #telegram bot api key:
 TELEGRAM_API_KEY = 'xxxxxxxxxxxxxxxx'
@@ -57,3 +59,10 @@ TELEGRAM_API_KEY = 'xxxxxxxxxxxxxxxx'
 ALLOWED_USER_ID = 000000000
 
 OUT_SCOPE_VULN_NUCLEI = ['CVE-xxxx-xxxx']
+
+API_PORT = 5000
+# If TOKEN_EXPIRATION is None, the token will not expire
+TOKEN_EXPIRATION = 3600  # 1 hour
+
+#SECRET_KEY for the JWT
+SECRET_KEY = 'YOUR_SECRET_KEY'  # Use a secure, random secret key for JWT
