@@ -25,6 +25,7 @@ The `Acunetix telegram bot` is a powerful and convenient Telegram bot designed t
   - Detailed Vulnerability Information: Get comprehensive details about each detected vulnerability directly in your Telegram chat, enabling quick assessment and action.
   - Convenient Scan Management: Start, stop, and manage your scans with simple and intuitive Telegram commands.
   - User Restriction: Only users specified in the configuration file can issue commands to the bot, ensuring controlled access. Currently, the bot sends all updates and vulnerability details to a single authorized user, even if the bot is added to a group.
+  - API interaction: By leveraging Acunetix's own API, this feature enables users to perform various operations without directly exposing the Acunetix server
 - Future Enhancements
   - Group Command: Plans to add support for group commands, allowing the bot to accept commands from multiple authorized users within a group and send updates to the entire group.
 
@@ -65,6 +66,8 @@ The following command are use for control the acunetix scan using telegram. More
 `/vuln_type`: get all scanned vulns by severity (1-4)<br>
 `/search_vuln`: search for vuln has been scaned<br>
 `/manual_activate_auto_scan`: Manual activate auto scan after it dead. Not sure if this work :)<br>
+`/notification`: Enable or disable new vulnerabilities notifications from the bot<br>
+`/get_api_token`: generate a new API token that can be used for authenticating requests to the associated API server<br>
 
 ## Example
 
@@ -252,6 +255,11 @@ Get the vuln detail by id: http request, highlighted, references, ...
         <img src="https://raw.githubusercontent.com/DTai261/Acunetix_tele_bot/main/attachments/auto_abort_1.png" alt="18">
           <br>
           <code>/auto_abort_scan_false</code> / <code>/auto_abort_scan_true</code>
+        </td>
+        <td>
+        <img src="https://raw.githubusercontent.com/DTai261/Acunetix_tele_bot/main/attachments/get_api_token.png" alt="19">
+          <br>
+          <code>/get_api_token</code>
         </td>
       </tr>
   </table>
