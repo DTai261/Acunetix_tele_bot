@@ -2,6 +2,7 @@ __pycache__/
 config.py
 
 # Test file
+test*
 resume.cfg
 test.json
 test2.py
