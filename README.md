@@ -45,7 +45,7 @@ python Telegram_bot.py
 
 ## Usage
 
-The following command are use for control the acunetix scan using telegram. More details in the <a href='#example'>example</a>. <br>
+The following command are use for control the acunetix scan using telegram. More details in the <a href='#examples'>examples</a>. <br>
 `/start`: just a start !<br>
 `/note`: write a note<br>
 `/read_note`: retrive note, can add arg as number of line<br>
@@ -69,7 +69,7 @@ The following command are use for control the acunetix scan using telegram. More
 `/notification`: Enable or disable new vulnerabilities notifications from the bot<br>
 `/get_api_token`: generate a new API token that can be used for authenticating requests to the associated API server<br>
 
-## Example
+## Examples
 
 ### `/add_target`
 When user provide domain target, the bot will scan subdomain using subfinder and httpx then add them to the Acunetix target list.
